@@ -17,7 +17,7 @@ function ftl2html(sourceRoot, outputRoot, ftlFile, tddPath, logPath) {
 	var tddParam = "";
 	logPath = logPath || "./logs/fmpp.log";
 
-	if (tdd) {
+	if (tddPath) {
 		//tdd语法组装
 		tddParam = tddPath.split(",").map(function(t) {
 			return "tdd(" + t + ")";
