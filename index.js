@@ -8,18 +8,18 @@ var execSync = require('child_process').execSync,
  * @param  {string} sourceRoot     ftl模板路径
  * @param  {string} outputRoot     输出html路径
  * @param  {string} ftlFile        编译的ftl文件名（相对sourceRoot）
- * @param  {string} tdd            mock数据文件
+ * @param  {string} tddFiles       mock数据文件
  * @return {void}                [ ]
  */
 
-function ftl2html(sourceRoot, outputRoot, ftlFile, tddPath, logPath) {
-	var jarPath = path.join(__dirname, "jar/fmpp-plus-1.0.0.jar");
+function ftl2html(sourceRoot, outputRoot, ftlFile, tddFiles, logPath) {
+	var jarPath = path.join(__dirname, "jar/fmpp.jar");
 	var tddParam = "";
-	logPath = logPath || "./logs/fmpp.log";
+	logPath = logPath || "./fmpp.log";
 
-	if (tddPath) {
+	if (tddFiles) {
 		//tdd语法组装
-		tddParam = tddPath.split(",").map(function(t) {
+		tddParam = tddFiles.split(",").map(function(t) {
 			return "tdd(" + t + ")";
 		}).join(",");
 	}
