@@ -17,4 +17,8 @@ var logFile = path.join(__dirname, 'fmpp.log');
 
 ftl2html(sourceRoot, outputRoot, ftlFile, tddFiles, logFile);
 
+ftl 文件中支持以下用法
+var user = ${JSONObject.fromObject(user)};
+var fids = ${JSONArray.fromObject(user.lockStatus.fids)};
+
 ```
