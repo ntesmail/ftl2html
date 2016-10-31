@@ -4,7 +4,7 @@
   "description": "covert freemaker template(ftl) to html by fmpp",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node /test/index.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +13,7 @@
   "keywords": [
     "freemarker",
     "ftl",
+    "node.js",
     "fmpp"
   ],
   "author": "wuzifang, jfw10973",

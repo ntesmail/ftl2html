@@ -9,7 +9,7 @@ var execSync = require('child_process').execSync,
  * @param  {string} outputRoot     输出html路径
  * @param  {string} ftlFile        编译的ftl文件名（相对sourceRoot）
  * @param  {string} tddFiles       mock数据文件
- * @return {void}                [ ]
+ * @return {void}
  */
 
 function ftl2html(sourceRoot, outputRoot, ftlFile, tddFiles, logPath) {

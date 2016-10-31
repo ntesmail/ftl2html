@@ -1,0 +1,17 @@
+{
+    "name": {
+        me: "jfw10973",
+        other: "wzf"
+    },
+    "age": [26, 30],
+    "worker": [
+        {
+            name: "A",
+            "age": 25
+        },
+        {
+            name: "B",
+            "age": 250
+        }
+    ]
+}
