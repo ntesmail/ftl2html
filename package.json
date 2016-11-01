@@ -1,10 +1,10 @@
 {
   "name": "ftl2html",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "covert freemaker template(ftl) to html by fmpp",
   "main": "index.js",
   "scripts": {
-    "test": "node /test/index.js"
+    "test": "node ./test/index.js"
   },
   "repository": {
     "type": "git",

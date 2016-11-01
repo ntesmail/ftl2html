@@ -2,12 +2,18 @@ var ftl2html = require('../index.js');
 var path = require('path');
 var fs = require("fs");
 
-var sourceRoot = path.resolve("test", "src");
-var outputRoot = path.resolve("test", "out");
+var sourceRoot = path.resolve(__dirname, "src");
+var mockRoot = path.resolve(__dirname, "tdd");
+var outputRoot = path.resolve(__dirname, "out");
+var logFile = path.resolve(__dirname, "test.log");
 var ftlExt = ".ftl";
 var tddExt = ".tdd";
-var result = [];
-var logFile = './test.log';
+var htmlExt = ".html";
+var param = [];
+var expect = [
+	'<i>test1</i><i>no</i><i>common</i>',
+	'<script>var name = {"other":"wzf","me":"jfw10973"};var age = [26,["test"]];var worker = [{"age":25,"name":"A"},{"age":250,"name":"B"}];</script>'
+];
 
 var ftlFileName = fs.readdirSync(sourceRoot).map(function (t) {
 	if (path.extname(t) == ftlExt) {
@@ -16,12 +22,16 @@ var ftlFileName = fs.readdirSync(sourceRoot).map(function (t) {
 });
 
 ftlFileName.forEach(function (t) {
-	result.push({
+	param.push({
 		ftlFile: t + ftlExt,
-		tddFiles: path.resolve("test", "tdd", t + tddExt) + ", " + path.resolve("test", "tdd", "common.tdd")
+		htmlFile: path.resolve(outputRoot, t + htmlExt),
+		tddFiles: path.resolve(mockRoot, t + tddExt) + ", " + path.resolve(mockRoot, "common" + tddExt)
 	});
 });
 
-result.map(function (t) {
+var result = param.every(function (t, idx) {
 	ftl2html(sourceRoot, outputRoot, t.ftlFile, t.tddFiles, logFile);
+	return fs.readFileSync(t.htmlFile, {encoding: "utf8"}) == expect[idx];
 });
+
+console.log(result);

@@ -1,16 +1,16 @@
 {
     "name": {
-        me: "jfw10973",
-        other: "wzf"
+        "me": "jfw10973",
+        "other": "wzf"
     },
-    "age": [26, 30],
+    "age": [26, ["test"]],
     "worker": [
         {
-            name: "A",
+            "name": "A",
             "age": 25
         },
         {
-            name: "B",
+            "name": "B",
             "age": 250
         }
     ]
