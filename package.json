@@ -1,10 +1,10 @@
 {
   "name": "ftl2html",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "covert freemaker template(ftl) to html by fmpp",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/ntesmail/ftl2html/issues"
   },
-  "homepage": "https://github.com/ntesmail/ftl2html#readme"
+  "homepage": "https://github.com/ntesmail/ftl2html#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
 }

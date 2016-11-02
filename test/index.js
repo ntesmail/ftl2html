@@ -1,37 +1,28 @@
 var ftl2html = require('../index.js');
 var path = require('path');
 var fs = require("fs");
+var assert = require('assert');
+var config = require('./testDesc.json');
 
-var sourceRoot = path.resolve(__dirname, "src");
-var mockRoot = path.resolve(__dirname, "tdd");
-var outputRoot = path.resolve(__dirname, "out");
-var logFile = path.resolve(__dirname, "test.log");
+var fileRoot = path.resolve(__dirname, "_file");
+var tmpRoot = path.resolve(__dirname, "_tmp");
+
 var ftlExt = ".ftl";
 var tddExt = ".tdd";
 var htmlExt = ".html";
-var param = [];
-var expect = [
-	'<i>test1</i><i>no</i><i>common</i>',
-	'<script>var name = {"other":"wzf","me":"jfw10973"};var age = [26,["test"]];var worker = [{"age":25,"name":"A"},{"age":250,"name":"B"}];</script>'
-];
+var logFile = "./fmpp.log";
 
-var ftlFileName = fs.readdirSync(sourceRoot).map(function (t) {
+fs.readdirSync(fileRoot).forEach(function (t) {
 	if (path.extname(t) == ftlExt) {
-		return path.basename(t, ftlExt);
+		var fileName = path.basename(t, ftlExt);
+		ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt), logFile);
+		var expectContent = fs.readFileSync(path.resolve(fileRoot, fileName + htmlExt)).toString();
+		var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
+
+		describe(config[fileName].name, function () {
+			it(config[fileName].describe, function () {
+				assert.equal(expectContent, covertContent);
+			});
+		});
 	}
 });
-
-ftlFileName.forEach(function (t) {
-	param.push({
-		ftlFile: t + ftlExt,
-		htmlFile: path.resolve(outputRoot, t + htmlExt),
-		tddFiles: path.resolve(mockRoot, t + tddExt) + ", " + path.resolve(mockRoot, "common" + tddExt)
-	});
-});
-
-var result = param.every(function (t, idx) {
-	ftl2html(sourceRoot, outputRoot, t.ftlFile, t.tddFiles, logFile);
-	return fs.readFileSync(t.htmlFile, {encoding: "utf8"}) == expect[idx];
-});
-
-console.log(result);
