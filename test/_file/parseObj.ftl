@@ -1,1 +1,5 @@
-<script>var name = ${JSONObject.fromObject(name)};var age = ${JSONArray.fromObject(age)};var worker = ${JSONArray.fromObject(worker)};</script>
+{
+    "object": ${JSONObject.fromObject(name)},
+    "array": ${JSONArray.fromObject(age)},
+    "arrayObject": ${JSONArray.fromObject(worker)}
+}
