@@ -2,7 +2,7 @@
 
 Node.js module invoke fmpp convert freemarker and data to html.
 
-**You need to Install Java Runtime Environment(JDK) 1.4+ first.**
+**You need to Install Java Runtime Environment(JRE) 1.4+ first.**
 
 ## Installation
 
@@ -39,18 +39,24 @@ becomes
 var ftl2html = require('ftl2html');
 
 // compile
-ftl2html(sourceRoot, outputRoot, ftlFile, tddFiles, logFile);
+ftl2html(ftlPath, outputPath, ftlFileName, tddFiles, logFile);
 ```
+- ftlPath: freemarker template file path
+- outputPath: convert to html save path
+- ftlFileName: freemarker template file name, relative to ftlPath
+- tddFiles: mock data file(reference fmpp manual)
+- logFile(optional): fmpp convert log, default is ./fmpp.log 
 
-extend syntax
+extend freemarker syntax
+
 ```js
-var user = ${JSONObject.fromObject(user)};
-var fids = ${JSONArray.fromObject(user.lockStatus.fids)};
+var user = ${JSONObject.fromObject(userObj)};
+var fids = ${JSONArray.fromObject(userArr)};
 ```
 
 ## Node.js Support
 
-0.12+
+4+
 
 ## Manual
 
