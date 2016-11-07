@@ -11,18 +11,18 @@ var ftlExt = ".ftl";
 var tddExt = ".tdd";
 var htmlExt = ".html";
 var logFile = "./fmpp.log";
+var javaVersion = 1.4;
 
 describe("java runtime", function () {
 	var res = spawnSync('java', ['-version']);
-	var version = res.stderr.toString().match(/java version \"([\d,\.,\_]+)\"/)[1];
+	var version = parseFloat(res.stderr.toString().match(/java version \"([\d,\.,\_]+)\"/)[1]);
 
 	it('has java runtime', function () {
 		expect(res.stderr.toString()).to.include('java version');
 	});
 
-	it('java version is 1.4 or later', function () {
-		var isLater = parseFloat(version) > 1.4;
-		expect(isLater).to.equal(true);
+	it('java version is ' + javaVersion + ' or later', function () {
+		expect(version).to.be.at.least(javaVersion);
 	});
 });
 

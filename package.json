@@ -1,6 +1,6 @@
 {
   "name": "ftl2html",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "covert freemaker template(ftl) to html by fmpp",
   "main": "index.js",
   "scripts": {
