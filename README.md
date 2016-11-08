@@ -1,8 +1,14 @@
 # ftl2html
 
-Node.js module invoke fmpp convert freemarker and data to html.
+ftl2html is a clean, **without dependency** Node.js module invoke fmpp convert freemarker and data to html.
 
 **You need to Install Java Runtime Environment(JRE) 1.4+ first.**
+
+[![Build Status](https://img.shields.io/travis/ntesmail/ftl2html/master.svg?style=flat)](https://travis-ci.org/ntesmail/ftl2html)
+[![Coverage Status](https://img.shields.io/coveralls/ntesmail/ftl2html/master.svg?style=flat)](https://coveralls.io/r/ntesmail/ftl2html?branch=master)
+[![Dependency Status](https://img.shields.io/david/ntesmail/ftl2html.svg?style=flat)](https://david-dm.org/ntesmail/ftl2html)
+[![devDependencies Status](https://img.shields.io/david/dev/ntesmail/ftl2html.svg?style=flat)](https://david-dm.org/ntesmail/ftl2html?type=dev)
+[![NPM version](https://img.shields.io/npm/v/ftl2html.svg?style=flat)](https://www.npmjs.com/package/ftl2html)
 
 ## Installation
 
@@ -14,7 +20,7 @@ $ npm install ftl2html
 
 ## Syntax
 
-ftl2html is a clean, no dependency module for covert freemarker to html.  Here is a simple example:
+It just like freemarker syntax with a little extend.  Here is a simple example:
 
 ```freemarker
 <i>${test1}</i><i>${test2!"no"}</i><i>${common}</i>
