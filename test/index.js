@@ -11,7 +11,7 @@ var ftlExt = ".ftl";
 var tddExt = ".tdd";
 var htmlExt = ".html";
 var logFile = "./fmpp.log";
-var javaVersion = 1.4;
+var javaVersion = 1.7;
 
 describe("java runtime", function () {
 	var res = spawnSync('java', ['-version']);

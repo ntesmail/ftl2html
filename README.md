@@ -2,7 +2,7 @@
 
 ftl2html is a clean, **without dependency** Node.js module invoke fmpp convert freemarker and data to html.
 
-**You need to Install Java Runtime Environment(JRE) 1.4+ first.**
+**You need to Install Java Runtime Environment(JRE) 1.7+ first.**
 
 [![Build Status](https://img.shields.io/travis/ntesmail/ftl2html/master.svg?style=flat)](https://travis-ci.org/ntesmail/ftl2html)
 [![Coverage Status](https://img.shields.io/coveralls/ntesmail/ftl2html/master.svg?style=flat)](https://coveralls.io/r/ntesmail/ftl2html?branch=master)
