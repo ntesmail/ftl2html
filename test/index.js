@@ -70,7 +70,7 @@ describe("default param", function () {
 	var fileName = "normal";
 	ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt));
 	it('default log path', function (done) {
-		fs.access(path.resolve("./fmpp.log"), fs.constants.F_OK, function (err) {
+		fs.access(path.resolve("./fmpp.log"), fs.constants && fs.constants.F_OK || fs.F_OK, function (err) {
 			expect(err).to.equal(null);
 			done();
 		});
