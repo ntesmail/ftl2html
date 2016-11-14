@@ -16,11 +16,9 @@ function ftl2html(sourceRoot, outputRoot, ftlFile, tddFiles, logPath) {
 	var tddParam = "";
 	logPath = logPath || "./fmpp.log";
 	//tdd语法组装
-	if (tddFiles) {
-		tddParam = tddFiles.split(",").map(function (t) {
-			return "tdd(" + t + ")";
-		}).join(",");
-	}
+	tddParam = tddFiles.split(",").map(function (t) {
+		return "tdd(" + t + ")";
+	}).join(",");
 
 	var command = `java -jar ${jarPath} -S ${sourceRoot} -O ${outputRoot} ${ftlFile} --replace-extensions "ftl, html" -L ${logPath} -D "${tddParam}"`;
 

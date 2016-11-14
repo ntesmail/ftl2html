@@ -27,13 +27,23 @@ describe("java runtime", function () {
 });
 
 describe("fmpp", function () {
-	var fileName = "normal";
-	ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt), logFile);
-	var expectContent = fs.readFileSync(path.resolve(fileRoot, fileName + htmlExt)).toString();
-	var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
 
 	it('covert fmpp normally', function () {
+		var fileName = "normal";
+		ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt), logFile);
+		var expectContent = fs.readFileSync(path.resolve(fileRoot, fileName + htmlExt)).toString();
+		var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
+
 		expect(expectContent).to.equal(covertContent);
+	});
+
+	it('covert bad template warning', function (done) {
+		var fileName = "error";
+		ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt));
+		fs.access(path.resolve(tmpRoot, fileName + htmlExt), fs.constants.F_OK, function (err) {
+			expect(err).to.not.equal(null);
+			done();
+		});
 	});
 });
 
@@ -53,5 +63,16 @@ describe("extend syntax", function () {
 
 	it('parse ObjectArray correct', function () {
 		expect(expectContent.objectArray).to.deep.equal(covertContent.objectArray);
+	});
+});
+
+describe("default param", function () {
+	var fileName = "normal";
+	ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt));
+	it('default log path', function (done) {
+		fs.access(path.resolve("./fmpp.log"), fs.constants.F_OK, function (err) {
+			expect(err).to.equal(null);
+			done();
+		});
 	});
 });
