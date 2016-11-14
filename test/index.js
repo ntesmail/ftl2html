@@ -40,7 +40,7 @@ describe("fmpp", function () {
 	it('covert bad template warning', function (done) {
 		var fileName = "error";
 		ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt));
-		fs.access(path.resolve(tmpRoot, fileName + htmlExt), fs.constants.F_OK, function (err) {
+		fs.access(path.resolve(tmpRoot, fileName + htmlExt), fs.constants && fs.constants.F_OK || fs.F_OK, function (err) {
 			expect(err).to.not.equal(null);
 			done();
 		});
