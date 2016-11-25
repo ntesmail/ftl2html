@@ -1,6 +1,6 @@
 {
   "name": "ftl2html",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "covert freemarker template(ftl) to html by fmpp",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "fmpp"
   ],
   "engines": {
-    "node": ">=4 <7"
+    "node": ">=4"
   },
   "author": "wuzifang, jfw10973",
   "license": "MIT",

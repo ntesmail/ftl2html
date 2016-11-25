@@ -45,6 +45,16 @@ describe("fmpp", function () {
 			done();
 		});
 	});
+
+	it('covert template without match tdd', function () {
+		var fileName = "nomatchtdd";
+		ftl2html(fileRoot, tmpRoot, fileName + ftlExt, path.resolve(fileRoot, fileName + tddExt) + ", " + path.resolve(fileRoot, "common" + tddExt));
+		var expectContent = fs.readFileSync(path.resolve(fileRoot, fileName + htmlExt)).toString();
+		var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
+
+		console.log(expectContent + " " + covertContent)
+		expect(expectContent).to.equal(covertContent);
+	});
 });
 
 describe("extend syntax", function () {
