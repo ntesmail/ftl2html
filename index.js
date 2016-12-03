@@ -66,6 +66,7 @@ function render(option) {
 
 			}
 			w.command = `${w.config.javaPath} -jar ${w.config.jarPath} -S ${w.config.sourceRoot} -O ${w.config.outputRoot} ${fileName + FTLEXT} -D "${w.config.tddParam}" --replace-extensions "ftl, html" -L "${w.config.logPath}" --append-log-file`;
+			w.config.isDebug && console.log(w.command);
 
 			if (w.config.async == true) {
 				exec(w.command, {
@@ -112,6 +113,9 @@ function ftl2html_compatible(sourceRoot, outputRoot, ftlFile, tddFiles, logPath)
 	}).filter(function (t) { return t; }).join(",");
 
 	var command = `${defaultOption.javaPath} -jar ${defaultOption.jarPath} -S ${sourceRoot} -O ${outputRoot} ${ftlFile} --replace-extensions "ftl, html" -L ${logPath} -D "${tddParam}" --append-log-file`;
+
+	var fileName = path.basename(ftlFile, FTLEXT);
+	var outputFile = path.resolve(outputRoot, fileName + HTMLEXT);
 
 	try {		//todo elegance
 		fs.accessSync(outputFile);
