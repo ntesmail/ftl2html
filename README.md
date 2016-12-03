@@ -1,6 +1,6 @@
 # ftl2html
 
-ftl2html is a clean, **without dependency** Node.js module invoke fmpp convert freemarker and data to html.
+ftl2html is a clean, **just one dependency** Node.js module invoke fmpp convert freemarker and data to html.
 
 **You need to Install Java Runtime Environment(JRE) 1.7+ first.**
 
