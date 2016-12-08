@@ -15,6 +15,10 @@ var htmlExt = ".html";
 var logFile = "./fmpp.log";
 var javaVersion = 1.7;
 
+function readFile(filePath, fileName) {
+    return fs.readFileSync(path.resolve(filePath, fileName + htmlExt), "utf8");
+}
+
 describe("java runtime", function() {
     var res = spawnSync('java', ['-version']);
     var version = parseFloat(res.stderr.toString().match(/java version \"([\d,\.,\_]+)\"/)[1]);
@@ -28,104 +32,81 @@ describe("java runtime", function() {
     });
 });
 
-describe("ftl2html usage", function() {
+describe("usage unexpect", function() {
     it('use ftl2html unexpect', function() {
         var res = ftl2html();
         expect(res).to.equal(false);
     });
 });
 
-describe("recommand", function() {
+describe("recommand usage", function() {
     var f = new ftl2html({
+        isDebug: false,
+		async: true,
         sourceRoot: srcRoot,
         dataRoot: dataRoot,
         outputRoot: tmpRoot,
         tddFiles: [path.resolve(dataRoot, "common" + tddExt)]
     });
+    it('covert fmpp normally config async', function(done) {
+        var fileName = "normal";
 
-    describe("fmpp", function() {
-        it('covert fmpp normally config async', function(done) {
-            var fileName = "normal";
+        f.render({
+            ftlFile: fileName + ftlExt,
+            callback: function(error, stdout, stderr, fileName) {
+                expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName));
+                done();
+            }
+        });
+    });
 
-            f.render({
-                ftlFile: fileName + ftlExt,
-                callback: function(error, stdout, stderr) {
-                    var expectContent = fs.readFileSync(path.resolve(targetRoot, fileName + htmlExt)).toString();
-                    var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
+    it('covert bad template warning', function(done) {
+        var fileName = "error";
 
-                    expect(expectContent).to.equal(covertContent);
+        f.render({
+            ftlFile: fileName + ftlExt,
+            callback: function(error, stdout, stderr, fileName) {
+                fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
+                    expect(err).to.not.equal(null);
                     done();
-                }
-            });
+                });
+            }
+        });
+    });
+
+    it('covert template without match tdd', function(done) {
+        var fileName = "nomatchtdd";
+
+        f.render({
+            ftlFile: fileName + ftlExt,
+            done: function(error, stdout, stderr, fileName) {
+                expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName));
+                done();
+            }
+        });
+    });
+
+    it('covert fmpp normally config sync', function() {
+        var fileName = "normal";
+
+        f.render({
+			async: false,
+            ftlFile: fileName + ftlExt
+        });
+        expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName));
+    });
+
+    it('covert bad template warning sync', function(done) {
+        var fileName = "error";
+
+        f.render({
+			async: false,
+            ftlFile: fileName + ftlExt
         });
 
-        it('covert fmpp normally config sync', function() {
-            var fileName = "normal";
-
-            f.renderSync({
-                ftlFile: fileName + ftlExt
-            });
-
-            var expectContent = fs.readFileSync(path.resolve(targetRoot, fileName + htmlExt)).toString();
-            var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
-
-            expect(expectContent).to.equal(covertContent);
-        });
-
-        it('covert bad template warning', function(done) {
-            var fileName = "error";
-
-            f.render({
-                ftlFile: fileName + ftlExt,
-                callback: function(error, stdout, stderr) {
-                    fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
-                        expect(err).to.not.equal(null);
-                        done();
-                    });
-                }
-            });
-        });
-
-        it('covert bad template warning sync', function(done) {
-            var fileName = "error";
-
-            f.renderSync({
-                ftlFile: fileName + ftlExt
-            });
-
-			fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
-				expect(err).to.not.equal(null);
-				done();
-			});
-        });
-
-        it('covert bad template warning', function(done) {
-            var fileName = "error";
-
-            f.render({
-                ftlFile: fileName + ftlExt,
-                callback: function(error, stdout, stderr) {
-                    fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
-                        expect(err).to.not.equal(null);
-                        done();
-                    });
-                }
-            });
-        });
-
-        it('covert template without match tdd', function(done) {
-            var fileName = "nomatchtdd";
-
-            f.render({
-                ftlFile: fileName + ftlExt,
-                callback: function(error, stdout, stderr) {
-                    var expectContent = fs.readFileSync(path.resolve(targetRoot, fileName + htmlExt)).toString();
-                    var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
-
-                    expect(expectContent).to.equal(covertContent);
-                    done();
-                }
-            });
+        fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
+            expect(err).to.not.equal(null);
+            done();
         });
     });
 });
@@ -135,10 +116,8 @@ describe("compatible", function() {
         it('covert fmpp normally', function() {
             var fileName = "normal";
             ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt), logFile);
-            var expectContent = fs.readFileSync(path.resolve(targetRoot, fileName + htmlExt)).toString();
-            var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
+            expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName));
 
-            expect(expectContent).to.equal(covertContent);
         });
 
         it('covert bad template warning', function(done) {
@@ -153,18 +132,16 @@ describe("compatible", function() {
         it('covert template without match tdd', function() {
             var fileName = "nomatchtdd";
             ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt));
-            var expectContent = fs.readFileSync(path.resolve(targetRoot, fileName + htmlExt)).toString();
-            var covertContent = fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString();
+            expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName));
 
-            expect(expectContent).to.equal(covertContent);
         });
     });
 
     describe("extend syntax", function() {
         var fileName = "parseObj";
         ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt), logFile);
-        var expectContent = JSON.parse(fs.readFileSync(path.resolve(targetRoot, fileName + htmlExt)).toString());
-        var covertContent = JSON.parse(fs.readFileSync(path.resolve(tmpRoot, fileName + htmlExt)).toString());
+        var expectContent = JSON.parse(readFile(targetRoot, fileName).toString());
+        var covertContent = JSON.parse(readFile(tmpRoot, fileName).toString());
 
         it('parse Object correct', function() {
             expect(expectContent.object).to.deep.equal(covertContent.object);
