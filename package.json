@@ -1,27 +1,23 @@
 {
   "name": "ftl2html",
-  "version": "1.1.0",
   "description": "covert freemarker template(ftl) to html by fmpp",
+  "version": "1.1.0",
+  "author": "wuzifang, jfw10973",
+  "license": "MIT",
+  "repository": "ntesmail/ftl2html",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require test/env",
+    "test": "mocha --require test/env --reporter nyan",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ntesmail/ftl2html.git"
   },
   "keywords": [
     "freemarker",
     "ftl",
-    "node.js",
     "fmpp"
   ],
   "engines": {
     "node": ">=4"
   },
-  "author": "wuzifang, jfw10973",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ntesmail/ftl2html/issues"
   },

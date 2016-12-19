@@ -67,7 +67,7 @@ describe("recommand usage", function() {
             ftlFile: fileName + ftlExt,
             callback: function(error, stdout, stderr, fileName) {
                 fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
-                    expect(err).to.not.equal(null);
+                    expect(err).to.not.be.null;
                     done();
                 });
             }
@@ -105,7 +105,7 @@ describe("recommand usage", function() {
         });
 
         fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
-            expect(err).to.not.equal(null);
+            expect(err).to.not.be.null;
             done();
         });
     });
@@ -124,7 +124,7 @@ describe("compatible", function() {
             var fileName = "error";
             ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt));
             fs.access(path.resolve(tmpRoot, fileName + htmlExt), function(err) {
-                expect(err).to.not.equal(null);
+                expect(err).to.not.be.null;
                 done();
             });
         });
@@ -161,7 +161,7 @@ describe("compatible", function() {
         ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt));
         it('default log path', function(done) {
             fs.access(path.resolve("./fmpp.log"), function(err) {
-                expect(err).to.equal(null);
+                expect(err).to.be.null;
                 done();
             });
         });
