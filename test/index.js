@@ -1,4 +1,3 @@
-//todo 性能测试与对比
 var ftl2html = require('../index.js');
 var path = require('path');
 var fs = require("fs");

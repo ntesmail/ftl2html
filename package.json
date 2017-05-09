@@ -1,7 +1,7 @@
 {
   "name": "ftl2html",
   "description": "covert freemarker template(ftl) to html by fmpp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "wuzifang, jfw10973",
   "license": "MIT",
   "repository": "ntesmail/ftl2html",
@@ -25,6 +25,12 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.14",
+    "eslint": "^3.18.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-html": "^2.0.3",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
     "glob": "^7.1.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.1.2"
