@@ -67,7 +67,7 @@ function compileFTL(t) {
     var outputFile = path.resolve(w.config.outputRoot, fileName + HTMLEXT)
 
     w.config.tddParam = [].concat(w.config.tddFiles, fileName + TDDEXT).map(function (t) {
-        t = path.resolve(__dirname, w.config.dataRoot, t)
+        t = path.resolve(w.config.dataRoot, t)
         try {
             t = t.trim()
             fs.accessSync(t)
