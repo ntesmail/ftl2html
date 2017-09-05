@@ -61,10 +61,14 @@ function execCMD(isAsync, command, callback) {
     }
 }
 
-function compileFTL(t) {
+function compileFTL(t, filePath) {
     var w = this
     var fileName = path.basename(t, FTLEXT)
     var outputFile = path.resolve(w.config.outputRoot, fileName + HTMLEXT)
+
+    w.config.sourceRoot = path.join(w.config.sourceRoot, filePath)
+    w.config.dataRoot = path.join(w.config.dataRoot, filePath)
+    w.config.outputRoot = path.join(w.config.outputRoot, filePath)
 
     w.config.tddParam = [].concat(w.config.tddFiles, fileName + TDDEXT).map(function (t) {
         t = path.resolve(w.config.dataRoot, t)
@@ -144,13 +148,13 @@ ftl2html.prototype.render = function (option) {
     var w = this
     w.config = Object.assign({}, w.initConfig, option)
 
-
     var fileList = glob.sync(path.join(w.config.sourceRoot, w.config.ftlFile))
+    var filePath = path.dirname(w.config.ftlFile)
 
     w.config.len = fileList.length
 
     fileList.map(function (t) {
-        compileFTL.call(w, t)
+        compileFTL.call(w, t, filePath)
     })
 }
 
