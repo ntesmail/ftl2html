@@ -7,7 +7,6 @@ ftl2html is a clean, **just one dependency** Node.js module invoke fmpp convert 
 [![Build Status](https://img.shields.io/travis/ntesmail/ftl2html/master.svg?style=flat)](https://travis-ci.org/ntesmail/ftl2html)
 [![Coverage Status](https://img.shields.io/coveralls/ntesmail/ftl2html/master.svg?style=flat)](https://coveralls.io/r/ntesmail/ftl2html?branch=master)
 [![Dependency Status](https://img.shields.io/david/ntesmail/ftl2html.svg?style=flat)](https://david-dm.org/ntesmail/ftl2html)
-[![devDependencies Status](https://img.shields.io/david/dev/ntesmail/ftl2html.svg?style=flat)](https://david-dm.org/ntesmail/ftl2html?type=dev)
 [![NPM version](https://img.shields.io/npm/v/ftl2html.svg?style=flat)](https://www.npmjs.com/package/ftl2html)
 
 ## Installation
@@ -20,13 +19,13 @@ $ npm install ftl2html
 
 ## example
 
-ftlPath: 
+ftlPath:
 ```
 /test/_src/normal.ftl
 /test/_src/parseObj.ftl
 ```
 
-tddPath: 
+tddPath:
 ```
 /test/_tdd/normal.tdd
 /test/_tdd/parseObj.tdd
@@ -81,7 +80,7 @@ initConfig parameter:
 - outputRoot: save converted html path **(require)**
 - isDebug: set true will print every fmpp command before execute, default is false
 - javaPath: use specify java if you need, default is "java"
-- jarPath: use specify fmpp.jar if you need, default is jar in module 
+- jarPath: use specify fmpp.jar if you need, default is jar in module
 - async: convert ftl async or not, default is true
 - tddFiles: common tdd file for all ftl convert
 - logFile: fmpp convert log, default is none
@@ -121,7 +120,7 @@ ftl2html(ftlPath, outputPath, ftlFileName, tddFiles, logFile);
 - outputPath: convert to html save path
 - ftlFileName: freemarker template file name, relative to ftlPath
 - tddFiles: mock data file(reference fmpp manual)
-- logFile: fmpp convert log, default is none 
+- logFile: fmpp convert log, default is none
 
 extend freemarker syntax
 
