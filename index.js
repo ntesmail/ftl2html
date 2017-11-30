@@ -37,28 +37,30 @@ function getParam(key) {
     return res
 }
 
-function execCMD(isAsync, command, callback) {
+function execCMD(isAsync, command) {
     const TIMEOUT = 3000
-
-    if (isAsync === true) {
-        exec(command, {
-            timeout: TIMEOUT
-        }, function (error, stdout, stderr) {
-            if (error) {
-                console.log(command, stdout.toString())
-            }
-            callback && callback.apply(null, arguments)
-        })
-    } else {
-        try {
-            execSync(command, {
+    return new Promise((resolve, reject) => {
+        if (isAsync) {
+            exec(command, {
                 timeout: TIMEOUT
+            }, function (error, stdout, stderr) {
+                if (error) {
+                    reject(command, stdout.toString())
+                } else {
+                    resolve.apply(null, arguments)
+                }
             })
-        } catch (e) {
-            console.log(command, e.stdout.toString())
+        } else {
+            try {
+                execSync(command, {
+                    timeout: TIMEOUT
+                })
+            } catch (e) {
+                // throw new Error(command, e.stdout.toString())
+                console.log(command, e.stdout.toString())
+            }
         }
-        callback && callback.apply(null, arguments)
-    }
+    })
 }
 
 function compileFTL(t, filePath) {
@@ -88,13 +90,13 @@ function compileFTL(t, filePath) {
         fs.unlinkSync(outputFile)
     } catch (e) { }
 
-    execCMD(w.config.async, w.command, function (error, stdout, stderr) {
-        w.config.isDebug && console.log(w.command)
+    return execCMD.call(w, w.config.async, w.command).then(() => {
         Array.prototype.push.call(arguments, fileName)
         w.config.callback && w.config.callback.apply(null, arguments)
-
-        w.config.len--
-        (w.config.len === 0) && w.config.async && w.config.done && w.config.done.apply(null, arguments)
+    }, (command, stdout) => {
+        w.config.isDebug && console.log(command, stdout)
+    }).catch((command, stdout) => {
+        w.config.isDebug && console.log(command, stdout)
     })
 }
 
@@ -149,12 +151,16 @@ ftl2html.prototype.render = function (option) {
     w.config = Object.assign({}, w.initConfig, option)
 
     var fileList = glob.sync(path.join(w.config.sourceRoot, w.config.ftlFile))
-    var filePath = path.dirname(w.config.ftlFile)
+    // var filePath = path.dirname(w.config.ftlFile)
 
     w.config.len = fileList.length
 
-    fileList.map(function (t) {
-        compileFTL.call(w, t, filePath)
+    var seq = fileList.map(function (t) {
+        compileFTL.call(w, t, path.dirname(t.split(w.config.sourceRoot)[1]))
+    })
+
+    Promise.all(seq).then(() => {
+        this.config.done && this.config.done.apply(null, arguments)
     })
 }
 
