@@ -37,7 +37,7 @@ function getParam(key) {
     return res
 }
 
-function execCMD(isAsync, command) {
+function execCMD(isAsync, command, fileName) {
     const TIMEOUT = 3000
     return new Promise((resolve, reject) => {
         if (isAsync) {
@@ -45,9 +45,9 @@ function execCMD(isAsync, command) {
                 timeout: TIMEOUT
             }, function (error, stdout, stderr) {
                 if (error) {
-                    reject(command, stdout.toString())
+                    reject([error, stdout.toString(), stderr, fileName])
                 } else {
-                    resolve.apply(null, arguments)
+                    resolve([error, stdout, stderr, fileName])
                 }
             })
         } else {
@@ -58,6 +58,7 @@ function execCMD(isAsync, command) {
             } catch (e) {
                 // throw new Error(command, e.stdout.toString())
                 console.log(command, e.stdout.toString())
+                // reject(command, e.stdout.toString())
             }
         }
     })
@@ -90,13 +91,11 @@ function compileFTL(t, filePath) {
         fs.unlinkSync(outputFile)
     } catch (e) { }
 
-    return execCMD.call(w, w.config.async, w.command).then(() => {
-        Array.prototype.push.call(arguments, fileName)
-        w.config.callback && w.config.callback.apply(null, arguments)
-    }, (command, stdout) => {
-        w.config.isDebug && console.log(command, stdout)
-    }).catch((command, stdout) => {
-        w.config.isDebug && console.log(command, stdout)
+    return execCMD.call(w, w.config.async, w.command, fileName).then(res => {
+        w.config.callback && w.config.callback.apply(null, res)
+    }, (res) => {
+        // w.config.isDebug && console.log(command, stdout)
+        w.config.callback && w.config.callback.apply(null, res)
     })
 }
 
@@ -156,7 +155,7 @@ ftl2html.prototype.render = function (option) {
     w.config.len = fileList.length
 
     var seq = fileList.map(function (t) {
-        compileFTL.call(w, t, path.dirname(t.split(w.config.sourceRoot)[1]))
+        return compileFTL.call(w, t, path.dirname(t.split(w.config.sourceRoot)[1]))
     })
 
     Promise.all(seq).then(() => {

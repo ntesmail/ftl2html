@@ -154,15 +154,13 @@ describe("compatible", function () {
             var fileName = "normal"
             ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt), logFile)
             expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName))
-
         })
 
-        it("covert bad template warning", function (done) {
+        it("covert bad template warning", function () {
             var fileName = "error"
             ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt))
             fs.access(path.resolve(tmpRoot, fileName + htmlExt), function (err) {
                 expect(err).to.not.be.null
-                done()
             })
         })
 
@@ -170,7 +168,6 @@ describe("compatible", function () {
             var fileName = "nomatchtdd"
             ftl2html(srcRoot, tmpRoot, fileName + ftlExt, path.resolve(dataRoot, fileName + tddExt) + ", " + path.resolve(dataRoot, "common" + tddExt))
             expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName))
-
         })
     })
 
