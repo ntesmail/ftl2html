@@ -73,6 +73,7 @@ describe("recommand usage", function () {
             outputRoot: tmpRoot,
             tddFiles: [path.resolve(dataRoot, "common" + tddExt)]
         })
+        this.timeout(5000)
 
         f.render({
             ftlFile: fileName + ftlExt,
@@ -80,6 +81,7 @@ describe("recommand usage", function () {
                 console.log(fileName)
                 if (fileName != "error") {
                     expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName))
+                    console.log("done " + fileName)
                 }
             },
             done: function () {
