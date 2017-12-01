@@ -64,6 +64,8 @@ describe("recommand usage", function () {
     })
 
     it("covert all files normally config async", function (done) {
+        this.timeout(5000)
+
         var f = new ftl2html({
             isDebug: true,
             async: true,
