@@ -91,7 +91,7 @@ function compileFTL(t, filePath) {
         fs.unlinkSync(outputFile)
     } catch (e) { }
 
-    return execCMD.call(w, w.config.async, w.command, fileName).then(res => {
+    return execCMD(w.config.async, w.command, fileName).then(res => {
         w.config.callback && w.config.callback.apply(null, res)
     }, (res) => {
         // w.config.isDebug && console.log(command, stdout)
