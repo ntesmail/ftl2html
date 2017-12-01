@@ -6,12 +6,10 @@
     "age": [26, ["test"]],
     "worker": [
         {
-            "name": "A",
-            "age": 25
+            "name": "A"
         },
         {
-            "name": "B",
-            "age": 250
+            "name": "B"
         }
     ]
 }
