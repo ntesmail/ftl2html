@@ -80,6 +80,8 @@ describe("recommand usage", function () {
             callback: function (error, stdout, stderr, fileName) {
                 console.log(fileName)
                 if (fileName != "error") {
+                    console.log(readFile(targetRoot, fileName))
+                    console.log(readFile(tmpRoot, fileName))
                     expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName))
                     console.log("done " + fileName)
                 }
