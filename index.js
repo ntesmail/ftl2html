@@ -66,12 +66,7 @@ function execCMD(isAsync, command, fileName) {
 
 function compileFTL(t, filePath) {
     var w = this
-    var fileName = path.basename(t, FTLEXT)
-    var outputFile = path.resolve(w.config.outputRoot, fileName + HTMLEXT)
-
-    w.config.sourceRoot = path.join(w.config.sourceRoot, filePath)
-    w.config.dataRoot = path.join(w.config.dataRoot, filePath)
-    w.config.outputRoot = path.join(w.config.outputRoot, filePath)
+    var fileName = path.join(".", filePath, path.basename(t, FTLEXT))
 
     w.config.tddParam = [].concat(w.config.tddFiles, fileName + TDDEXT).map(function (t) {
         t = path.resolve(w.config.dataRoot, t)
@@ -88,7 +83,7 @@ function compileFTL(t, filePath) {
     w.command = `${w.config.javaPath} -jar ${w.config.jarPath} -S ${w.config.sourceRoot} -O ${w.config.outputRoot} ${fileName + FTLEXT} -D "${w.config.tddParam}" --replace-extensions "ftl, html" -L "${w.config.logPath}" -C "${w.config.configFile}"`
 
     try {		//todo elegance
-        fs.unlinkSync(outputFile)
+        fs.unlinkSync(path.resolve(w.config.outputRoot, fileName + HTMLEXT))
     } catch (e) { }
 
     return execCMD(w.config.async, w.command, fileName).then(res => {

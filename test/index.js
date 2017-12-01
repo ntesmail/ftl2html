@@ -64,16 +64,6 @@ describe("recommand usage", function () {
     })
 
     it("covert all files normally config async", function (done) {
-        this.timeout(5000)
-
-        var f = new ftl2html({
-            isDebug: true,
-            async: true,
-            sourceRoot: srcRoot,
-            dataRoot: dataRoot,
-            outputRoot: tmpRoot,
-            tddFiles: [path.resolve(dataRoot, "common" + tddExt)]
-        })
         var fileName = "**/*"
 
         f.render({
@@ -94,7 +84,7 @@ describe("recommand usage", function () {
 
         f.render({
             ftlFile: fileName + ftlExt,
-            callback: function (error, stdout, stderr) {
+            callback: function (error, stdout, stderr, fileName) {
                 expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName))
             },
             done: function () {
