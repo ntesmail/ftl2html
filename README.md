@@ -48,7 +48,9 @@ f.render({
     callback: function (error, stdout, stderr, fileName) {
         console.log(fileName + " is done");
     },
-    done: function() {}
+    done: function() {
+        console.log("Everything is done");
+    }
 });
 ```
 
@@ -92,10 +94,10 @@ initConfig parameter:
 f.render({
     ftlFile: "./normal.ftl",
     callback: function(error, stdout, stderr, fileName) {
-        console.log(fileName);
+        console.log(fileName + " is done");
     },
     done: function() {
-        console.timeEnd("t")
+        console.log("Everything is done");
     }
 });
 ```
