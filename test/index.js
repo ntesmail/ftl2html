@@ -77,6 +77,7 @@ describe("recommand usage", function () {
         f.render({
             ftlFile: fileName + ftlExt,
             callback: function (error, stdout, stderr, fileName) {
+                console.log(fileName)
                 if (fileName != "error") {
                     expect(readFile(targetRoot, fileName)).to.equal(readFile(tmpRoot, fileName))
                 }
@@ -107,7 +108,6 @@ describe("recommand usage", function () {
         f.render({
             ftlFile: fileName + ftlExt,
             callback: function (error, stdout, stderr, fileName) {
-                console.log(fileName)
                 fs.access(path.resolve(tmpRoot, fileName + htmlExt), function (err) {
                     expect(err).to.not.be.null
                 })
