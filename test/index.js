@@ -65,6 +65,14 @@ describe("recommand usage", function () {
 
     it("covert all files normally config async", function (done) {
         var fileName = "**/*"
+        var f = new ftl2html({
+            isDebug: true,
+            async: true,
+            sourceRoot: srcRoot,
+            dataRoot: dataRoot,
+            outputRoot: tmpRoot,
+            tddFiles: [path.resolve(dataRoot, "common" + tddExt)]
+        })
 
         f.render({
             ftlFile: fileName + ftlExt,
@@ -99,6 +107,7 @@ describe("recommand usage", function () {
         f.render({
             ftlFile: fileName + ftlExt,
             callback: function (error, stdout, stderr, fileName) {
+                console.log(fileName)
                 fs.access(path.resolve(tmpRoot, fileName + htmlExt), function (err) {
                     expect(err).to.not.be.null
                 })
