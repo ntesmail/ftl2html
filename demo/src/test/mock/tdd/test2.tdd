@@ -1,8 +1,0 @@
-{
-    'realHost': 'cwebmail.mail.163.com/test2',
-    'data': 
-        [
-            {'name' : 'test2'}, 
-            {'name' : 'test2-2'}
-        ]
-}
